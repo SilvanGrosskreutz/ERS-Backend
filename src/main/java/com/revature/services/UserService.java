@@ -33,10 +33,10 @@ public class UserService {
 	}
 	
 	public User login(User user) {
-		if(userDAO.getUserByUsername(user.getUsername()).isPresent()) {
-			User dbUser = userDAO.getUserByUsername(user.getUsername()).get();
-			if(pwEncoder.matches(user.getPassword(), dbUser.getPassword())) {
-				return dbUser;
+		Optional<User> dbUser = userDAO.getUserByUsername(user.getUsername());
+		if(dbUser.isPresent()) {
+			if(pwEncoder.matches(user.getPassword(), dbUser.get().getPassword())) {
+				return dbUser.get();
 			}
 		}
 		return null;
