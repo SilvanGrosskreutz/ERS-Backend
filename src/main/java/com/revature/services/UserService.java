@@ -47,6 +47,7 @@ public class UserService {
 		if(dbUser.isPresent()) {
 			User updatedUser = dbUser.get();
 			updatedUser.setPassword(user.getPassword());
+			updatedUser.setReimbursements(user.getReimbursements());
 			userDAO.save(updatedUser);
 			return updatedUser;
 		}

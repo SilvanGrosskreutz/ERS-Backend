@@ -19,6 +19,7 @@ import com.revature.models.Reimbursement;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.services.ReimbursementService;
+import com.revature.services.UserService;
 
 @RestController
 @RequestMapping("/reim")
@@ -26,11 +27,13 @@ import com.revature.services.ReimbursementService;
 public class ReimbursementController {
 	
 	private ReimbursementService reimService;
+	private UserService userService;
 	
 	@Autowired
-	public ReimbursementController(ReimbursementService reimService) {
+	public ReimbursementController(ReimbursementService reimService, UserService userService) {
 		super();
 		this.reimService = reimService;
+		this.userService = userService;
 	}
 	
 	@GetMapping
@@ -78,6 +81,10 @@ public class ReimbursementController {
 			User user = (User) session.getAttribute("user");
 			reim.setAuthor(user);
 			reimService.createReimbursement(reim);
+			List<Reimbursement> reims = user.getReimbursements();
+			reims.add(reim);
+			user.setReimbursements(reims);
+			userService.update(user);
 			return ResponseEntity.status(201).build();
 		}
 		return ResponseEntity.status(403).build();
