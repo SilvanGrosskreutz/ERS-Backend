@@ -36,6 +36,7 @@ public class ReimbursementService {
 		if(reim != null) {
 			Reimbursement dbReim = reimDAO.findById(reim.getId()).get();
 			dbReim.setStatus(reim.getStatus());
+			dbReim.setResolver(reim.getResolver());
 			return reimDAO.save(dbReim);
 		}
 		return null;
