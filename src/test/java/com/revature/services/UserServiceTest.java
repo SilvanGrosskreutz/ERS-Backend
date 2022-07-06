@@ -55,7 +55,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void LoginTest() {
+	public void loginTest() {
 		
 		BDDMockito.given(userDAO.getUserByUsername(testUser.getUsername()))
 			.willReturn(Optional.of(testUser));
