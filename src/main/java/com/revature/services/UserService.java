@@ -22,12 +22,12 @@ public class UserService {
 	}
 	
 	public User register(User user) {
-		if(!userDAO.getUserByUsername(user.getUsername()).isPresent()) {
+		Optional<User> dbUser = userDAO.getUserByUsername(user.getUsername());
+		if(!dbUser.isPresent()) {
 			String password = pwEncoder.encode(user.getPassword());
 			user.setPassword(password);
 			user.setId(0);
-			userDAO.save(user);
-			return userDAO.getUserByUsername(user.getUsername()).get();
+			return userDAO.save(user);
 		}
 		return null;
 	}

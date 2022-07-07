@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.revature.models.Reimbursement;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.repositories.UserDAO;
@@ -46,12 +47,15 @@ public class UserServiceTest {
 	@Test
 	public void registerTest() {
 		
-		BDDMockito.given(userDAO.getUserByUsername(testUser.getUsername()))
-			.willReturn(Optional.of(testUser));
-		
-		User savedUser = userService.register(testUser);
-				
-		assertThat(userService.register(testUser)).isEqualTo(savedUser);
+	BDDMockito.given(userDAO.save(testUser)).willReturn(testUser);
+
+	BDDMockito.given(userDAO.getUserByUsername(testUser.getUsername()))
+		.willReturn(Optional.empty());	
+	
+	User user = userService.register(testUser);
+	
+	assertThat(testUser).isEqualTo(user);
+	
 	}
 	
 	@Test
