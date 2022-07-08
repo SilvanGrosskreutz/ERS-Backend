@@ -20,7 +20,7 @@ import com.revature.services.UserService;
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class UserController {
 	
-private UserService userService;
+	private UserService userService;
 	
 	@Autowired
 	public UserController(UserService userService) {

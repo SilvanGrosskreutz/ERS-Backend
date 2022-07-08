@@ -22,7 +22,7 @@ import com.revature.services.ReimbursementService;
 import com.revature.services.UserService;
 
 @RestController
-@RequestMapping("/reim")
+@RequestMapping("/reims")
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 public class ReimbursementController {
 	
@@ -75,11 +75,9 @@ public class ReimbursementController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Reimbursement> addReimbursement(@RequestBody Reimbursement reim,
-			HttpSession session){
-		if(reim!=null && (boolean)session.getAttribute("logged in")==true) {
-			User user = (User) session.getAttribute("user");
-			reim.setAuthor(user);
+	public ResponseEntity<Reimbursement> addReimbursement(@RequestBody Reimbursement reim){
+		if(reim!=null) {
+			User user = reim.getAuthor();
 			reimService.createReimbursement(reim);
 			List<Reimbursement> reims = user.getReimbursements();
 			reims.add(reim);
